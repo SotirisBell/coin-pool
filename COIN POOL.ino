@@ -8,6 +8,9 @@
   --------------------------------------------------------------------------------------------------------
 ********************************************************************************************************/
 
+
+
+
 #include <EEPROM.h>
 #include "Ticktick.h"
 #include <ShiftDisplay.h>
@@ -131,20 +134,43 @@ void Tseconds()
 	if (SECS == 0 && BAL == dopen)
 	{
 		pp++;
-		if (pp > 6) {
+		if (pp > 9) {
 			pp = 0;
 			ps++;
 		}
-		if (ps < 10) {
-			if (pp == 4 || pp == 5 || pp == 6)	digitalWrite(SER, 1); delay(200); digitalWrite(SER, 0);
+		
+		if (ps < 10 && pp > 5 && pp <= 9) {
+			digitalWrite(SER, 1);
 		}
-		else
+		else if (ps < 10 && pp >=0 && pp <= 5)
 		{
-			digitalWrite(SER, 1); delay(200); digitalWrite(SER, 0);
+			digitalWrite(SER, 0);
 		}
-	
-	
+		
+		else if (ps>10)
+
+		{
+			digitalWrite(SER, 1);
+		}
+		
+		
+
+	//	if (ps < 10) {
+	//		if (pp > 5&& pp<=10)	digitalWrite(SER, 1);// delay(200); digitalWrite(SER, 0);
+	//	}
+	//	else
+	//	{
+	//		digitalWrite(SER, 1);//; delay(200); digitalWrite(SER, 0);
+	//	}
+	//
+	//
 	}
+	else if (SECS == 0 && BAL == dclose)
+	{
+		digitalWrite(SER, 0);
+	}
+	if (SECS > 0)digitalWrite(SER, 0);
+	
 	FORMAT_TIME();
 	BAL = digitalRead(BALLS);
 	SET_DISPLAY();
